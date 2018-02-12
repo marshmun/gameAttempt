@@ -78,5 +78,20 @@ public class Player extends Creature {
             return 0;
         }
     }
+    public void levelUp(){
+        level++;
+        int hp = 0;
+        int att = 0;
+        switch (roleToNumber()){
+            case 1: hp = 24; att = 14; break;
+            case 2: hp = 19; att = 19; break;
+            case 3: hp = 16; att = 22; break;
+
+        }
+        maxHp +=(hp * Math.random()/2 + .7);
+        maxAtt +=( att * Math.random()/2 +.7);
+        minAtt = maxAtt - 3;
+        this.curHp = maxHp;
+    }
 
 }
