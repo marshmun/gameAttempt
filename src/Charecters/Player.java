@@ -1,0 +1,82 @@
+package Charecters;
+
+public class Player extends Creature {
+   public int xp;
+   private int hpPotions =3;
+
+   public Player(String name, String role){
+       super(name, role);
+       this.level = 1;
+       rollStats();
+       this.curHp = maxHp;
+   }
+
+   public String useHealthPotion() {
+       if (hpPotions >= 1) {
+           this.setCurHp(this.getCurHp() + 25);
+           hpPotions--;
+           return hpPotions + " potions left.";
+       } else {
+           return "No potions to use.";
+       }
+   }
+    public int getHealthpotions(){
+       return hpPotions;
+    }
+    public void setHealthPotions(int newHpPotions){
+        hpPotions = newHpPotions;
+    }
+    public int gainXp(Creature other){
+        int x = other.getLevel();
+        int gainedXp = x * (int)(Math.random() * (60 - 21)+ 20);
+        xp += gainedXp;
+        return gainedXp;
+    }
+    public boolean checkXp(){
+        if(xp >= level * 40){
+            xp = xp - ( level * 40);
+            levelUp();
+
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public String status(){
+        return name + " has " + curHp + "/" + maxHp + " health.";
+    }
+    public String getXp(){
+        return xp + "/" + (level * 40);
+    }
+    public void rollStats(){
+        int hp = 0;
+        int att = 0;
+        switch(roleToNumber()){
+            case 1: hp = 16; att = 10; break;
+            case 2: hp = 13; att = 13; break;
+            case 3: hp = 12; att = 14; break;
+        }
+        maxHp = (roll(6) + hp);
+        maxAtt = (roll(6) + att);
+        minAtt = (maxAtt -3);
+
+    }
+
+    private int roll (int sides){
+        int aRoll = (int)(Math.random() * sides + 1);
+        return aRoll;
+    }
+    //Changes the inputed role to a number
+    private int roleToNumber(){
+        if(role.equalsIgnoreCase("Warrior")){
+            return 1;
+        }else if(role.equalsIgnoreCase("Rogue")){
+            return 2;
+        }else if(role.equalsIgnoreCase("Mage")){
+            return 3;
+        }else{
+            return 0;
+        }
+    }
+
+}
